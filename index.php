@@ -535,6 +535,14 @@ function getProjectCategoryLabel($category)
     }
 }
 
+function portfolioAssetPath($path)
+{
+    if (getenv('VERCEL') === '1') {
+        return '/' . preg_replace('#^public/#', '', ltrim($path, '/'));
+    }
+
+    return $path;
+}
 
 function renderProjectCard(
     $title,
@@ -583,7 +591,7 @@ function renderProjectCard(
         >
 
             <img
-                src="' . htmlspecialchars($image) . '"
+                src="' . htmlspecialchars(portfolioAssetPath($image)) . '"
                 alt="Screenshot of ' . htmlspecialchars($title) . ' project showing the main interface"
                 loading="lazy"
                 class="w-full h-full
@@ -1926,7 +1934,7 @@ function renderSkillTree($tree, $depth = 0)
 
             <!-- View Resume -->
             <a
-                href="public/CV - Muh. Fayiz Syamsuddin.pdf"
+                href="<?php echo htmlspecialchars(portfolioAssetPath('public/CV - Muh. Fayiz Syamsuddin.pdf')); ?>"
                 id="view-resume"
                 class="group inline-flex items-center
                     justify-center
@@ -2204,7 +2212,7 @@ function renderSkillTree($tree, $depth = 0)
                             class="w-full h-full rounded-xl overflow-hidden"
                         >
                             <img
-                                src="public/faiz.jpg"
+                                src="<?php echo htmlspecialchars(portfolioAssetPath('public/faiz.jpg')); ?>"
                                 alt="Muh. Fayiz Syamsuddin"
                                 class="w-full h-full object-cover
                                     transition-transform duration-700
